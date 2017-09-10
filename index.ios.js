@@ -12,6 +12,11 @@ import {
   View
 } from 'react-native';
 
+import { Sentry } from 'react-native-sentry';
+
+Sentry.config("https://6b9ea796e02b44f5bc01585cfe075b49:f04c03847c0e48d99e03aa4069cca84f@sentry.io/214510").install();
+
+
 export default class AwesomeProject extends Component {
   render() {
     return (

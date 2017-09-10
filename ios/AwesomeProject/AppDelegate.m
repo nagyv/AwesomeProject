@@ -8,9 +8,15 @@
  */
 
 #import "AppDelegate.h"
+#import <RNAnalytics/RNAnalytics.h>
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#if __has_include(<React/RNSentry.h>)
+#import <React/RNSentry.h> // This is used for versions of react >= 0.40
+#else
+#import "RNSentry.h" // This is used for versions of react < 0.40
+#endif
 
 @implementation AppDelegate
 
@@ -18,12 +24,17 @@
 {
   NSURL *jsCodeLocation;
 
+  [RNAnalytics registerWithInitiallyEnabled:true];  // Initialize Mobile Center analytics
+
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"AwesomeProject"
                                                initialProperties:nil
                                                    launchOptions:launchOptions];
+
+  [RNSentry installWithRootView:rootView];
+
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
